@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Salon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const Button = ({ href, variant = 'primary', children }) => {
+            const styles = {
+                primary: 'rounded-lg bg-indigo-600 px-6 py-3 text-lg font-medium text-white hover:bg-indigo-500',
+                secondary: 'text-lg font-medium text-gray-900 hover:text-indigo-600'
+            };
+            return (
+                <a href={href} className={`${styles[variant]} transition-colors`}>{children}</a>
+            );
+        };
+
+        const Section = ({ className = '', children }) => (
+            <div className={`py-24 ${className}`}>
+                <div className="mx-auto max-w-7xl px-6">{children}</div>
+            </div>
+        );
+
+        const SectionHeader = ({ subtitle, title, description, center, light }) => (
+            <div className={`${center ? 'text-center' : ''} max-w-3xl ${center ? 'mx-auto' : ''} mb-16`}>
+                {subtitle && <span className="text-indigo-600 font-semibold text-sm uppercase tracking-wider">{subtitle}</span>}
+                <h2 className={`text-4xl font-bold mt-4 ${light ? 'text-white' : ''}`}>{title}</h2>
+                {description && <p className={`text-xl mt-6 ${light ? 'text-indigo-200' : 'text-gray-600'}`}>{description}</p>}
+            </div>
+        );
+
+        const Navigation = () => (
+            <nav className="bg-white border-gray-200 px-4 lg:px-6 py-4 shadow-sm sticky top-0 z-50">
+                <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+                    <a href="#" className="text-indigo-600 text-2xl font-bold">Atlas Salon</a>
+                    <div className="flex items-center lg:order-2 gap-4">
+                        <Button href="#" variant="secondary">Log in</Button>
+                        <Button href="#">Join Now</Button>
+                    </div>
+                    <div className="hidden lg:flex lg:gap-8">
+                        {['About', 'How It Works', 'Benefits', 'Testimonials'].map(item => (
+                            <a key={item} href="#" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors">
+                                {item}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </nav>
+        );
+
+        const Hero = () => (
+            <div className="bg-gradient-to-b from-indigo-50 to-white">
+                <Section>
+                    <div className="text-center max-w-3xl mx-auto">
+                        <h1 className="text-5xl font-bold text-gray-900 mb-8 leading-tight">
+                            Atlas Salon: Where Minds Expand Together
+                        </h1>
+                        <p className="text-xl text-gray-600 mb-12">
+                            An exclusive community of thinkers and doers. Share knowledge, spark ideas, and grow in ways that matter.
+                        </p>
+                        <div className="flex items-center justify-center gap-6">
+                            <Button href="#">Join Now</Button>
+                            <Button href="#" variant="secondary">Learn more →</Button>
+                        </div>
+                    </div>
+                </Section>
+            </div>
+        );
+
+        const HowItWorks = () => {
+            const steps = [
+                { number: 1, title: 'Sign Up', description: 'Tell us what you can teach and what you want to learn' },
+                { number: 2, title: 'Get Matched', description: 'We pair you with two others who complement your goals' },
+                { number: 3, title: 'Engage', description: 'Over three sessions, rotate roles as teacher and learner' },
+                { number: 4, title: 'Grow', description: 'Build connections that challenge and inspire you' }
+            ];
+
+            return (
+                <Section className="bg-white">
+                    <SectionHeader title="How Atlas Salon Works" center />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                        {steps.map(({ number, title, description }) => (
+                            <div key={number} className="text-center">
+                                <div className="text-2xl font-bold text-indigo-600 mb-4">{number}</div>
+                                <h3 className="text-xl font-semibold mb-4">{title}</h3>
+                                <p className="text-gray-600">{description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </Section>
+            );
+        };
+
+        const Benefits = () => {
+            const benefits = [
+                {
+                    title: "Dynamic Learning",
+                    description: "Teach what you know. Learn what you love. Discover something new."
+                },
+                {
+                    title: "Curated Community",
+                    description: "Connect with people who think deeply, create boldly, and inspire action."
+                },
+                {
+                    title: "Meaningful Conversations",
+                    description: "Dive into ideas that matter, with no room for small talk."
+                }
+            ];
+
+            return (
+                <Section className="bg-indigo-600">
+                    <SectionHeader 
+                        title="Unlock a world of knowledge and growth"
+                        description="Experience a curated space where thinkers and doers come together to share knowledge, spark ideas, and grow in meaningful ways."
+                        center
+                        light
+                    />
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                        {benefits.map(({ title, description }) => (
+                            <div key={title} className="text-white">
+                                <h3 className="text-xl font-semibold mb-4">{title}</h3>
+                                <p className="text-indigo-200 mb-6">{description}</p>
+                                <a href="#" className="text-white hover:text-indigo-200 transition-colors">
+                                    Learn more →
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                </Section>
+            );
+        };
+
+        const App = () => (
+            <div className="bg-gray-50">
+                <Navigation />
+                <Hero />
+                <HowItWorks />
+                <Benefits />
+            </div>
+        );
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
